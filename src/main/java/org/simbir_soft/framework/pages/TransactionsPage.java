@@ -14,7 +14,8 @@ public class TransactionsPage extends BasePage {
     WebElement transactionsTable;
 
     @Step("Проверка наличия таблицы на странице")
-    public TransactionsPage checkTable(int numberOfEntries) {
+    public TransactionsPage checkTable(int numberOfEntries) throws InterruptedException {
+        Thread.sleep(1000);
         int transactionsCount = transactionsTable.findElements(By.xpath("//tbody//tr")).size();
         assertThat(transactionsCount)
                 .as("Количество результатов в таблице: %d -> не совпадает с '%d'", transactionsCount, numberOfEntries)

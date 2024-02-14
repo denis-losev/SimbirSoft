@@ -48,13 +48,15 @@ public class CustomerCabinetPage extends BasePage{
     }
 
     @Step("Клик по кнопке 'Transactions'")
-    public TransactionsPage clickTransactionsBtn() {
+    public TransactionsPage clickTransactionsBtn() throws InterruptedException {
+        Thread.sleep(1000);
         transactionsBtn.click();
         return pageManager.getTransactionsPage();
     }
 
     @Step("Клик по кнопке подтверждения депозита")
-    public CustomerCabinetPage clickConfirmDepositBtn(String balanceExpected) {
+    public CustomerCabinetPage clickConfirmDepositBtn(String balanceExpected) throws InterruptedException {
+        Thread.sleep(1000);
         confirmDepositBtn.click();
         wait.until(ExpectedConditions.visibilityOf(operationDepositSuccessful));
         checkBalanceValue(balanceExpected);
@@ -62,7 +64,8 @@ public class CustomerCabinetPage extends BasePage{
     }
 
     @Step("Клик по кнопке подтверждения списания")
-    public CustomerCabinetPage clickConfirmWithdrawlBtn(String balanceExpected) {
+    public CustomerCabinetPage clickConfirmWithdrawlBtn(String balanceExpected) throws InterruptedException {
+        Thread.sleep(1000);
         confirmWithdrawlBtn.click();
         wait.until(ExpectedConditions.visibilityOf(operationTransactionSuccessful));
         checkBalanceValue(balanceExpected);

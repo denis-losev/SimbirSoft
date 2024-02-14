@@ -1,5 +1,6 @@
 package org.simbir_soft.framework.managers;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static org.simbir_soft.framework.utils.PropConstants.IMPLICITLY_WAIT;
@@ -13,9 +14,9 @@ public class InitManager {
 
     public static void initFramework() {
         driverManager.getDriver().manage().timeouts()
-                .implicitlyWait(Integer.parseInt(props.getProperty(IMPLICITLY_WAIT)), TimeUnit.SECONDS);
+                .implicitlyWait(Duration.ofSeconds(Integer.parseInt(props.getProperty(IMPLICITLY_WAIT))));
         driverManager.getDriver().manage().timeouts()
-                .pageLoadTimeout(Integer.parseInt(props.getProperty(PAGE_LOAD_TIMEOUT)), TimeUnit.SECONDS);
+                .pageLoadTimeout(Duration.ofSeconds(Integer.parseInt(props.getProperty(PAGE_LOAD_TIMEOUT))));
 
     }
 
