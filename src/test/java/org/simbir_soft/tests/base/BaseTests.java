@@ -15,7 +15,7 @@ public class BaseTests {
 
     private final TestPropManager testPropManager = TestPropManager.getTestPropManager();
     protected PageManager app = PageManager.getPageManager();
-    protected WebDriverWait wait;
+//    protected WebDriverWait wait;
 
     @BeforeClass
     public void startWebDriver() {

@@ -16,17 +16,19 @@
         <testng.version>7.8.0</testng.version>
         <selenium.version>4.11.0</selenium.version>
         <assertj-core.version>3.19.0</assertj-core.version>
-        <aspectj.version>1.9.7</aspectj.version>
-        <allure.version>2.15.0</allure.version>
+        <aspectj.version>1.9.20.1</aspectj.version>
+        <allure.version>2.24.0</allure.version>
         <allure-testng.version>2.23.0</allure-testng.version>
         <allure-java-commons.version>2.23.0</allure-java-commons.version>
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
+        <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
         <opencsv.version>4.1</opencsv.version>
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -40,22 +42,18 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.2</version>
-
+                    <version>${maven.surefire.plugin.version}</version>
                     <configuration>
-
                         <testFailureIgnore>false</testFailureIgnore>
-
+                        <includes>**/*Test.java</includes>
                         <argLine>
+                            -Xmx1024m
+                            -Dfile.encoding=${project.build.sourceEncoding}
                             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         </argLine>
-
-                        <systemProperties>
-                            <property>
-                                <name>allure.results.directory</name>
-                                <value>${project.build.directory}/allure-results</value>
-                            </property>
-                        </systemProperties>
+                        <systemPropertyVariables>
+                            <allure.results.directory>${project.build.directory}/reports/allure-results</allure.results.directory>
+                        </systemPropertyVariables>
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -70,63 +68,86 @@
                     <groupId>io.qameta.allure</groupId>
                     <artifactId>allure-maven</artifactId>
                     <version>2.10.0</version>
-
                     <configuration>
-                        <reportVersion>2.15.0</reportVersion>
+                        <reportVersion>2.10.0</reportVersion>
+                        <resultsDirectory>${project.build.directory}/reports/allure-results</resultsDirectory>
+                        <reportDirectory>${project.build.directory}/reports/allure-reports</reportDirectory>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>Allure-plugin</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-bom</artifactId>
+                <version>${allure.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-java-commons</artifactId>
-            <version>${allure-java-commons.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>${allure-testng.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j-simple.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>${opencsv.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
