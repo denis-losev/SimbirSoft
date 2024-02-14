@@ -1,7 +1,6 @@
 package org.simbir_soft.framework.managers;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 import static org.simbir_soft.framework.utils.PropConstants.IMPLICITLY_WAIT;
 import static org.simbir_soft.framework.utils.PropConstants.PAGE_LOAD_TIMEOUT;

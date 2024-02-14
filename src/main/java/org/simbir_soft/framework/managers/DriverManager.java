@@ -6,7 +6,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 import static org.simbir_soft.framework.utils.PropConstants.*;
 
